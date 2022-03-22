@@ -1,44 +1,45 @@
-﻿@{
+﻿@model IEnumerable<IEnumerable<string>>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<p class="fs-5 mb-4">Encontre palavras através de um filtro simples.</p>
-<form>
+
+<form asp-action="Index" method="get">
   <div class="mb-3">
     <label for="mascara" class="form-label">Máscara</label>
-    <input type="text" class="form-control" id="mascara">    
+    <input type="text" class="form-control" id="mascara" name="mascara" value="@ViewData["mascara"]">    
   </div>
   <div class="mb-3">
     <label for="letrasIgnoradas" class="form-label">Letras Ignoradas</label>
-    <input type="text" class="form-control" id="letrasIgnoradas">
+    <input type="text" class="form-control" id="letrasIgnoradas" name="letrasIgnoradas" value="@ViewData["letrasIgnoradas"]">
   </div>
   <div class="mb-3">
     <label for="letrasObrigatorias" class="form-label">Letras Obrigatórias</label>
-    <input type="text" class="form-control" id="letrasObrigatorias">
+    <input type="text" class="form-control" id="letrasObrigatorias" name="letrasObrigatorias" value="@ViewData["letrasObrigatorias"]">
   </div>
   <button type="submit" class="btn btn-primary">Buscar</button>
 </form>
-<div class="py-5"> 
-    <div class="container">
-    <div class="row">
-        <div class="col">
-        Palavra
-        </div>
-        <div class="col">
-        Palavra
-        </div>
-        <div class="col">
-        Palavra
-        </div>
-        <div class="col">
-        Palavra
-        </div>
-        <div class="col">
-        Palavra
-        </div>
-        <div class="col">
-        Palavra
+
+@if (Model != null)
+{
+    <div class="py-5"> 
+        <div class="container">
+            <table class="table text-white">
+                <tbody>
+                    @foreach (var list in Model)
+                    {
+                        <tr>
+                            @foreach (var word in list)
+                            {
+                                <td>
+                                    @word 
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-    </div>
-</div>
+}
