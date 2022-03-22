@@ -3,20 +3,30 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Web</title>
+    <title>@ViewData["Title"] - Cata Palavra</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>        
+    <header class="d-flex justify-content-center py-2 bg-dark text-white">
+        <ul class="nav nav-pills">
+            <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>            
+            <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        </ul>            
     </header>
     <div>
         <main role="main">
-            @RenderBody()
+            <div class="bg-dark text-secondary px-4 py-5 text-center">                
+                <h1 class="display-5 fw-bold text-white">Cata Palavra</h1>
+                <div class="col-lg-6 mx-auto">
+                    @RenderBody()                    
+                </div>
+            </div>
+
         </main>
     </div>
-    <footer>
+    <footer class="py-3 my-4">        
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
