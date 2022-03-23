@@ -16,13 +16,13 @@ public class HomeController : Controller
         _buscadorService = buscadorService;
     }
 
-    public async Task<IActionResult> Index(string mascara, string letrasIgnoradas, string letrasObrigatorias)
+    public IActionResult Index(string mascara, string letrasIgnoradas, string letrasObrigatorias)
     {
         ViewData["mascara"] = mascara;
         ViewData["letrasIgnoradas"] = letrasIgnoradas;
         ViewData["letrasObrigatorias"] = letrasObrigatorias;
 
-        var resultadoDaBusca = await _buscadorService.Buscar(mascara, letrasIgnoradas, letrasObrigatorias);
+        var resultadoDaBusca = _buscadorService.Buscar(mascara, letrasIgnoradas, letrasObrigatorias);
 
         var palavras = resultadoDaBusca.ToList();
         
