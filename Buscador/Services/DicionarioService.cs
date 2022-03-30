@@ -11,7 +11,9 @@ public class DicionarioService : IDicionarioService
     {
         var executionPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".";
 
-        _dicionario = File.ReadAllLines($"{ executionPath }{ @"\dicio\pt-br-master\dicio" }");
+        var filePath = Path.Combine(executionPath, "dicio", "pt-br-master", "dicio");
+
+        _dicionario = File.ReadAllLines(filePath);
     }
 
     public string[] GetDicionario()
