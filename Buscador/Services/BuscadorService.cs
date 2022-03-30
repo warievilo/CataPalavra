@@ -1,14 +1,17 @@
 ﻿using Buscador.Interfaces;
-using System.Collections;
 using System.Text.RegularExpressions;
-using System.IO;
-using System.Reflection;
-using Microsoft.Extensions.FileProviders;
 
 namespace Buscador.Services;
 
 public class BuscadorService : IBuscadorService
 {
+    private readonly IDicionarioService _dicionarioService;
+
+    public BuscadorService(IDicionarioService dicionarioService)
+    {
+        _dicionarioService = dicionarioService;
+    }
+
     public IEnumerable<string> Buscar(string? mascara, string? letrasIgnoradas, string? letrasObrigatorias)
     {
         var palavras = new List<string>();
@@ -19,13 +22,7 @@ public class BuscadorService : IBuscadorService
         var ra = GetRegexPrimaryFilter(mascara, letrasIgnoradas);
         var rb = GetRegexSecondaryFilter(letrasObrigatorias);
         
-        var provider = new EmbeddedFileProvider(Assembly.GetExecutingAssembly());
-
-        var files = provider.GetDirectoryContents(string.Empty);
-        
-        using var stream = provider.GetFileInfo("dicio.pt_br_master.dicio").CreateReadStream();
-        using var reader = new StreamReader(stream);        
-        string[] dicionario = reader.ReadToEnd().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        var dicionario = _dicionarioService.GetDicionario();
 
         foreach (string palavra in dicionario)
             if (ra.IsMatch(palavra) && rb.IsMatch(palavra))

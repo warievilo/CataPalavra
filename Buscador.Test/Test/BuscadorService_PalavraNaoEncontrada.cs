@@ -1,6 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Buscador.Interfaces;
-using Buscador.Services;
 using System.Linq;
 
 namespace Buscador.Test.Test;
@@ -10,10 +9,7 @@ public class BuscadorService_PalavraNaoEncontrada
 {
     private readonly IBuscadorService _buscadorService;
 
-    public BuscadorService_PalavraNaoEncontrada()
-    {
-        _buscadorService = new BuscadorService();
-    }
+    public BuscadorService_PalavraNaoEncontrada() => _buscadorService = Factory.InstanceFactory.CreateBuscadorService();
 
     [TestMethod]
     [DataRow("", "", "")]
