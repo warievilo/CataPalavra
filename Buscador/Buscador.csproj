@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- <None Include=".\dicio\pt-br-master\dicio" CopyToOutputDirectory="Always"  /> -->
-    <EmbeddedResource Include=".\dicio\pt-br-master\dicio" />
+    <None Include=".\dicio\pt-br-master\dicio" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 </Project>
