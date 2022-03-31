@@ -1,7 +1,7 @@
-using Buscador.Interfaces;
-using Buscador.Services;
+using CataPalavra.Buscador.Interfaces;
+using CataPalavra.Buscador.Services;
 
-namespace Buscador.Test.Factory;
+namespace CataPalavra.Test.Factory;
 
 public static class InstanceFactory
 {

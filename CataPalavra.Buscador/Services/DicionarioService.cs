@@ -1,7 +1,7 @@
-using Buscador.Interfaces;
+using CataPalavra.Buscador.Interfaces;
 using System.Reflection;
 
-namespace Buscador.Services;
+namespace CataPalavra.Buscador.Services;
 
 public class DicionarioService : IDicionarioService
 {

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\Buscador\Buscador.csproj" />
+    <ProjectReference Include="..\CataPalavra.Buscador\CataPalavra.Buscador.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

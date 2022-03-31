@@ -1,8 +1,7 @@
-using Buscador.Interfaces;
-using Buscador.Services;
+using CataPalavra.Buscador.Interfaces;
+using CataPalavra.Buscador.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IDicionarioService, DicionarioService>();
 builder.Services.AddScoped<IBuscadorService, BuscadorService>();
