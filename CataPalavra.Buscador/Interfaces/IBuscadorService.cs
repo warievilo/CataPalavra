@@ -1,4 +1,4 @@
-namespace Buscador.Interfaces;
+namespace CataPalavra.Buscador.Interfaces;
 
 public interface IBuscadorService
 {

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Buscador\Buscador.csproj" />
+    <ProjectReference Include="..\CataPalavra.Buscador\CataPalavra.Buscador.csproj" />
   </ItemGroup>
 
 </Project>

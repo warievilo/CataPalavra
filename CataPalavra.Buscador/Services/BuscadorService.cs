@@ -1,7 +1,7 @@
-﻿using Buscador.Interfaces;
+﻿using CataPalavra.Buscador.Interfaces;
 using System.Text.RegularExpressions;
 
-namespace Buscador.Services;
+namespace CataPalavra.Buscador.Services;
 
 public class BuscadorService : IBuscadorService
 {

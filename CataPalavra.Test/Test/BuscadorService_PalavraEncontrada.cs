@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Buscador.Interfaces;
+using CataPalavra.Buscador.Interfaces;
 using System.Linq;
 
-namespace Buscador.Test.Test;
+namespace CataPalavra.Test.Test;
 
 [TestClass]
 public class BuscadorService_PalavraEncontrada
