@@ -12,61 +12,106 @@ public class BuscadorService : IBuscadorService
         _dicionarioService = dicionarioService;
     }
 
-    public IEnumerable<string> Buscar(string? mascara, string? letrasIgnoradas, string? letrasObrigatorias)
+    public IEnumerable<string> Search(string? word, string? ignoredLetters, string? includedLetters)
     {
-        var palavras = new List<string>();
+        var foundWords = new List<string>();
 
-        if (string.IsNullOrEmpty(mascara))
-            return palavras;
+        if (string.IsNullOrEmpty(word))
+            return foundWords;
 
-        var ra = GetRegexPrimaryFilter(mascara, letrasIgnoradas);
-        var rb = GetRegexSecondaryFilter(letrasObrigatorias);
+        var regexForWord = GetRegexForWord(word);
+        var regexForIgnoredLetters = GetRegexForIgnoredLetters(word, ignoredLetters);
+        var regexForIncludedLetters = GetRegexForIncludedLetters(word, includedLetters);
         
-        var dicionario = _dicionarioService.GetDicionario();
+        var dictionary = _dicionarioService.GetDicionario();
 
-        foreach (string palavra in dicionario)
-            if (ra.IsMatch(palavra) && rb.IsMatch(palavra))
-                palavras.Add(palavra);
+        foreach (var w in dictionary)
+            if (regexForWord.IsMatch(w) && regexForIgnoredLetters.IsMatch(w) && regexForIncludedLetters.IsMatch(w))
+                foundWords.Add(w);
 
-        return palavras;
+        return foundWords;    
     }
 
-    private Regex GetRegexPrimaryFilter(string mascara, string? letrasIgnoradas) 
+    private Regex GetRegexForWord(string? word) 
     {
-        string filtroLetrasIgnoradas = string.Empty;
-        
-        if (!string.IsNullOrEmpty(letrasIgnoradas) && letrasIgnoradas.Length > 0)
-            filtroLetrasIgnoradas = $"(?![{ letrasIgnoradas.ToLower() }])";
+        string filter = string.Empty;
 
-        string filtroLetras = string.Empty;
-
-        foreach (char c in mascara.ToLower().ToCharArray())
+        if (!string.IsNullOrWhiteSpace(word))
         {
-            var filtroPalavras = ".";
+            word = word.ToLower();
 
-            if (c != '*')
-                filtroPalavras = $"[{ c }]";
+            foreach (char character in word.ToCharArray())
+            {
+                var characterFilter = character == '*' ? "." : $"[{ character }]";
 
-            if (string.IsNullOrEmpty(filtroLetrasIgnoradas))
-                filtroLetras += filtroPalavras;
-            else
-                filtroLetras += $"{filtroLetrasIgnoradas}{filtroPalavras}";        
+                filter = $"{filter}{characterFilter}";        
+            }
         }
 
-        filtroLetras = @$"\b{ filtroLetras }\b";
+        filter = @$"\b{ filter }\b";
 
-        return new Regex(filtroLetras, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        return new Regex(filter, RegexOptions.Compiled | RegexOptions.IgnoreCase);
     }
 
-    private Regex GetRegexSecondaryFilter(string? letrasObrigatorias) 
+    private Regex GetRegexForIgnoredLetters(string? word, string? ignoredLetters) 
     {
-        //(?=\w*c)(?=\w*y)\w+
-        var filtro = @"\w+";
+        string filter = string.Empty;
 
-        if (!string.IsNullOrEmpty(letrasObrigatorias))
-            foreach (var c in letrasObrigatorias.ToLower().ToCharArray())
-                filtro = $@"(?=\w*{ c }){ filtro }";
+        if (!string.IsNullOrWhiteSpace(word))
+        {
+            string ignoredLettersFilter = string.Empty;
+        
+            if (!string.IsNullOrWhiteSpace(ignoredLetters))
+                ignoredLettersFilter = $"(?![{ ignoredLetters.ToLower() }])";
+            
+            word = word.ToLower();
 
-        return new Regex(filtro, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            foreach (char character in word.ToCharArray())
+            {
+                if (character != '*')
+                {
+                    filter += $"[{ character }]";
+                    continue;
+                }
+                
+                filter += string.IsNullOrEmpty(ignoredLettersFilter) ? "." : $"{ ignoredLettersFilter }.";                
+            }
+        }
+
+        filter = @$"\b{ filter }\b";
+
+        return new Regex(filter, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    }
+
+    private Regex GetRegexForIncludedLetters(string? word, string? includedLetters) 
+    {
+        string filter = string.Empty;
+
+        if (!string.IsNullOrWhiteSpace(word))
+        {
+            string includedLettersFilter = string.Empty;
+        
+            if (!string.IsNullOrWhiteSpace(includedLetters)) {
+                includedLetters = includedLetters.ToLower();
+                includedLettersFilter = $"[{ string.Join('|', includedLetters.ToCharArray()) }]";
+            }
+            
+            word = word.ToLower();
+
+            foreach (char character in word.ToCharArray())
+            {
+                if (character != '*')
+                {
+                    filter += $"[{ character }]";
+                    continue;
+                }
+                
+                filter += string.IsNullOrEmpty(includedLettersFilter) ? "." : $"{ includedLettersFilter }";                
+            }
+        }
+
+        filter = @$"\b{ filter }\b";
+
+        return new Regex(filter, RegexOptions.Compiled | RegexOptions.IgnoreCase);
     }
 }

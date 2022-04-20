@@ -22,7 +22,7 @@ public class HomeController : Controller
         ViewData["letrasIgnoradas"] = letrasIgnoradas;
         ViewData["letrasObrigatorias"] = letrasObrigatorias;
 
-        var resultadoDaBusca = _buscadorService.Buscar(mascara, letrasIgnoradas, letrasObrigatorias);
+        var resultadoDaBusca = _buscadorService.Search(mascara, letrasIgnoradas, letrasObrigatorias);
 
         var palavras = resultadoDaBusca.ToList();
         

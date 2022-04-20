@@ -17,7 +17,7 @@ public class BuscadorService_PalavraEncontrada
     [DataRow("tes**", "", "a")]
     public void BuscadorService_PalavraEncontrada_ReturnTrue(string mascara, string letrasIgnoradas, string letrasObrigatorias)
     {
-        var resultadoDaBusca = _buscadorService.Buscar(mascara, letrasIgnoradas, letrasObrigatorias);
+        var resultadoDaBusca = _buscadorService.Search(mascara, letrasIgnoradas, letrasObrigatorias);
         
         Assert.IsTrue(resultadoDaBusca.Count() > 0, "Alguma palavra deve ser encontrada");
     }
